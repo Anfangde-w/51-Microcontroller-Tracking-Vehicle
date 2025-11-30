@@ -1,0 +1,148 @@
+C51 COMPILER V9.60.7.0   CAR                                                               11/30/2025 20:25:54 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE CAR
+OBJECT MODULE PLACED IN .\Objects\Car.obj
+COMPILER INVOKED BY: d:\Keil_v5\C51\BIN\C51.EXE Car.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Car.l
+                    -st) OBJECT(.\Objects\Car.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          //传感器串口
+   4          sbit sensorL1 = P2 ^ 0;
+   5          sbit sensorL2 = P2 ^ 1;
+   6          sbit sensorMi = P2 ^ 2;
+   7          sbit sensorR2 = P2 ^ 3;
+   8          sbit sensorR1 = P2 ^ 4;
+   9          //电机串口
+  10          sbit MotorL1 = P0 ^ 3;
+  11          sbit MotorL2 = P0 ^ 4;
+  12          sbit MotorR1 = P0 ^ 5;
+  13          sbit MotorR2 = P0 ^ 6;
+  14          
+  15          int TurnValue = 0;
+  16          
+  17          //传感器检测
+  18          //sensorL1 = P2 ^ 0;
+  19          //sensorL2 = P2 ^ 1;
+  20          //sensorMi = P2 ^ 2;
+  21          //sensorR2 = P2 ^ 3;
+  22          //sensorR1 = P2 ^ 4;
+  23          int Sensor_Move(void)
+  24          {
+  25   1              //居中前进
+  26   1              if(sensorL1 == 1 && sensorL2 == 0 && sensorMi == 0 && sensorR2 == 0 && sensorR1 == 1)
+  27   1              {
+  28   2                      //正误差偏右向左转，负误差偏左向右转
+  29   2                      TurnValue = ((1 * -2)+(0 * -1)+(0 * 0)+(0 * 1)+(1 * 2));
+  30   2              }
+  31   1              if(sensorL1 == 1 && sensorL2 == 1 && sensorMi == 0 && sensorR2 == 1 && sensorR1 == 1)
+  32   1              {TurnValue = ((1 * -2)+(1 * -1)+(0 * 0)+(1 * 1)+(1 * 2));}
+  33   1              
+  34   1              if(sensorL1 == 1 && sensorL2 == 0 && sensorMi == 0 && sensorR2 == 1 && sensorR1 == 1)
+  35   1              {TurnValue = ((1 * -2)+(0 * -1)+(0 * 0)+(1 * 1)+(1 * 2));}
+  36   1              
+  37   1              if(sensorL1 == 1 && sensorL2 == 1 && sensorMi == 0 && sensorR2 == 0 && sensorR1 == 1)
+  38   1              {TurnValue = ((1 * -2)+(1 * -1)+(0 * 0)+(0 * 1)+(1 * 2));}
+  39   1              
+  40   1              if(sensorL1 == 1 && sensorL2 == 1 && sensorMi == 1 && sensorR2 == 0 && sensorR1 == 1)
+  41   1              {TurnValue = ((1 * -2)+(1 * -1)+(1 * 0)+(0 * 1)+(1 * 2));}
+  42   1              
+  43   1              if(sensorL1 == 1 && sensorL2 == 0 && sensorMi == 1 && sensorR2 == 1 && sensorR1 == 1)
+  44   1              {TurnValue = ((1 * -2)+(0 * -1)+(1 * 0)+(1 * 1)+(1 * 2));}
+  45   1              
+  46   1              if(sensorL1 == 0 && sensorL2 == 0 && sensorMi == 1 && sensorR2 == 1 && sensorR1 == 1)
+  47   1              {TurnValue = ((0 * -2)+(0 * -1)+(1 * 0)+(1 * 1)+(1 * 2));}
+  48   1              
+  49   1              if(sensorL1 == 1 && sensorL2 == 1 && sensorMi == 1 && sensorR2 == 0 && sensorR1 == 0)
+  50   1              {TurnValue = ((1 * -2)+(1 * -1)+(1 * 0)+(0 * 1)+(0 * 2));}
+  51   1              
+  52   1              if(sensorL1 == 0 && sensorL2 == 1 && sensorMi == 1 && sensorR2 == 1 && sensorR1 == 1)
+  53   1              {TurnValue = ((0 * -2)+(1 * -1)+(1 * 0)+(1 * 1)+(1 * 2));}
+  54   1              
+C51 COMPILER V9.60.7.0   CAR                                                               11/30/2025 20:25:54 PAGE 2   
+
+  55   1              if(sensorL1 == 1 && sensorL2 == 1 && sensorMi == 1 && sensorR2 == 1 && sensorR1 == 0)
+  56   1              {TurnValue = ((1 * -2)+(1 * -1)+(1 * 0)+(1 * 1)+(0 * 2));}
+  57   1              
+  58   1              if(sensorL1 == 0 && sensorL2 == 0 && sensorMi == 0 && sensorR2 == 1 && sensorR1 == 1)
+  59   1              {TurnValue = ((0 * -2)+(0 * -1)+(0 * 0)+(1 * 1)+(1 * 2));}
+  60   1              
+  61   1              if(sensorL1 == 1 && sensorL2 == 1 && sensorMi == 0 && sensorR2 == 0 && sensorR1 == 0)
+  62   1              {TurnValue = ((1 * -2)+(1 * -1)+(0 * 0)+(0 * 1)+(0 * 2));}
+  63   1              
+  64   1              //无轨道前进
+  65   1              if(sensorL1 == 1 && sensorL2 == 1 && sensorMi == 1 && sensorR2 == 1 && sensorR1 == 1)
+  66   1              {TurnValue = ((1 * -2)+(1 * -1)+(1 * 0)+(1 * 1)+(1 * 2));}
+  67   1              
+  68   1              //停止线或标记线停下或鸣响
+  69   1              if((sensorL1 == 0 && sensorL2 == 1 && sensorMi == 1 && sensorR2 == 1 && sensorR1 == 0) ||
+  70   1                      (sensorL1 == 1 && sensorL2 == 0 && sensorMi == 1 && sensorR2 == 0 && sensorR1 == 1))
+  71   1              {
+  72   2                      TurnValue = 10;
+  73   2              }
+  74   1              
+  75   1              return TurnValue;
+  76   1      }
+  77          
+  78          //电机控制
+  79          void Motor_Go(unsigned char* L,unsigned char* R)
+  80          {
+  81   1              MotorL1 = 1;MotorL2 = 0;
+  82   1              MotorR1 = 1;MotorR2 = 0;
+  83   1              *L = 255;*R = 255;
+  84   1      }
+  85          
+  86          void Motor_Back(unsigned char* L,unsigned char* R)
+  87          {
+  88   1              MotorL1 = 0;MotorL2 = 1;
+  89   1              MotorR1 = 0;MotorR2 = 1;
+  90   1              *L = 255;*R = 255;
+  91   1      }
+  92          
+  93          void Motor_TurnLeft(unsigned char* L,unsigned char* R)
+  94          {
+  95   1              MotorL1 = 1;MotorL2 = 0;
+  96   1              MotorR1 = 1;MotorR2 = 0;
+  97   1              *L = 128;*R = 255;
+  98   1      }
+  99          
+ 100          void Motor_TurnRight(unsigned char* L,unsigned char* R)
+ 101          {
+ 102   1              MotorL1 = 1;MotorL2 = 0;
+ 103   1              MotorR1 = 1;MotorR2 = 0;
+ 104   1              *L = 255;*R = 128;
+ 105   1      }
+ 106          
+ 107          void Motor_Break(unsigned char* L,unsigned char* R)
+ 108          {
+ 109   1              MotorL1 = 1;MotorL2 = 1;
+ 110   1              MotorR1 = 1;MotorR2 = 1;
+ 111   1              *L = 255;*R = 255;
+ 112   1      }
+ 113          
+ 114          void Motor_Null(unsigned char* L,unsigned char* R)
+ 115          {
+ 116   1              MotorL1 = 0;MotorL2 = 0;
+C51 COMPILER V9.60.7.0   CAR                                                               11/30/2025 20:25:54 PAGE 3   
+
+ 117   1              MotorR1 = 0;MotorR2 = 0;
+ 118   1              *L = 255;*R = 255;
+ 119   1      }
+ 120          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    447    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      36
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

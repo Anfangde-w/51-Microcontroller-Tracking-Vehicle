@@ -1,0 +1,9 @@
+".\Objects\main.obj",
+".\Objects\TB6612FNC.obj",
+".\Objects\Button.obj",
+".\Objects\PID.obj",
+".\Objects\Car.obj",
+".\Objects\Timer.obj" 
+TO ".\Objects\Project" 
+PRINT(".\Listings\Project.m51") RAMSIZE(256) 
+DISABLEWARNING (16) 
